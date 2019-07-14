@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Data">
+      <UniqueIdentifier>{203e166e-a96e-427e-8651-85060c693e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Interfaces">
+      <UniqueIdentifier>{a0fa45d0-19e7-435f-ae66-e5106b6a2ac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Headers">
+      <UniqueIdentifier>{bac1faf6-d405-4bf2-a4c8-7c9f3da3accb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Implementations">
+      <UniqueIdentifier>{d489dd7d-8262-479e-a54a-d4fee055dd7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Operations">
+      <UniqueIdentifier>{751a5619-e809-4bd4-a21b-dff9d2c72138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Operations\Interfaces">
+      <UniqueIdentifier>{854362af-ad18-4229-98fe-bc5da0fed822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Operations\Headers">
+      <UniqueIdentifier>{c6471a90-e715-45e6-9340-8eee21e0492e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Operations\Implementations">
+      <UniqueIdentifier>{20e2d629-032f-4548-8428-8cbc25339146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Results">
+      <UniqueIdentifier>{023041c3-ec34-47f8-b9de-d25a558a25d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Results\Interfaces">
+      <UniqueIdentifier>{52718373-5d04-4628-8b6e-d77900379671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Results\Headers">
+      <UniqueIdentifier>{94de273a-e32c-4007-a352-f03e329b93d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Results\Implementations">
+      <UniqueIdentifier>{27818e60-d52d-4134-a8e6-fa80c68056ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic">
+      <UniqueIdentifier>{300a8849-0206-4ed0-a12e-6e2458e7d6a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic\Interfaces">
+      <UniqueIdentifier>{b938a46b-440d-465c-b3bd-9bed55aa74ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic\Implementations">
+      <UniqueIdentifier>{4a01bbaf-923e-4124-b13e-ed7e2809f71d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic\Headers">
+      <UniqueIdentifier>{91010148-a373-428d-9d4b-a8b94ee2add3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Data\Interfaces\IData.h">
+      <Filter>Data\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Data\Interfaces\IDataSptr.h">
+      <Filter>Data\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Data\Headers\IntervalData.h">
+      <Filter>Data\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperation.h">
+      <Filter>Operations\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperationSptr.h">
+      <Filter>Operations\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\PrimeNumberOperation.h">
+      <Filter>Operations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResult.h">
+      <Filter>Results\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResultSptr.h">
+      <Filter>Results\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Headers\ListResult.h">
+      <Filter>Results\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\IPresentable.h">
+      <Filter>Basic\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\OrdinalPresenter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Data\Implementations\IntervalData.cpp">
+      <Filter>Data\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\PrimeNumberOperation.cpp">
+      <Filter>Operations\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Results\Implementations\ListResult.cpp">
+      <Filter>Results\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\OrdinalPresenter.cpp" />
+  </ItemGroup>
+</Project>

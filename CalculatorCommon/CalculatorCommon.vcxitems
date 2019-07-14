@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{a16f4e00-5411-4cf7-8d0d-525fa06004df}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\OrdinalPresenter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\IPresentable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Data\Headers\IntervalData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Data\Interfaces\IData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Data\Interfaces\IDataSptr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\PrimeNumberOperation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperationSptr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Headers\ListResult.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResult.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResultSptr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\OrdinalPresenter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Data\Implementations\IntervalData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\PrimeNumberOperation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Results\Implementations\ListResult.cpp" />
+  </ItemGroup>
+</Project>
