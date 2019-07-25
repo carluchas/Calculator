@@ -4,6 +4,7 @@
 #include "Basic/Headers/easylogging++.h"
 #include "Data/Headers/IntervalData.h"
 #include "Data/Interfaces/IDataSptr.h"
+#include "Operations/Headers/EfficientPrimeNumberOperation.h"
 #include "Operations/Headers/FibonacciNumberOperation.h"
 #include "Operations/Headers/OperationException.h"
 #include "Operations/Headers/PrimeNumberOperation.h"
@@ -36,9 +37,9 @@ int main( )
 
   auto sp_data = IDataSptr( IntervalData::NewSptr( first, size ) );
 
-  auto sp_operation = PrimeNumberOperation::NewSptr( );
-
   IResultSptr sp_result;
+
+  auto sp_operation = PrimeNumberOperation::NewSptr( );
 
   try
   {
@@ -58,6 +59,32 @@ int main( )
     LOG( INFO ) << sp_operation->Present( ) + " " +
       sp_data->Present( ) + ": " + sp_result->Present( );
     LOG( INFO ) << std::endl;
+
+    sp_result.reset( );
+  }
+
+  sp_operation = EfficientPrimeNumberOperation::NewSptr( );
+
+  try
+  {
+    sp_result = sp_operation->Execute( sp_data );
+  }
+  catch( const OperationException& ar_exception )
+  {
+    LOG( INFO ) << std::endl;
+    LOG( INFO ) << "Error processing " + sp_operation->Present( ) + ": " +
+      ar_exception.what( ) + " in " + ar_exception.where( );
+    LOG( INFO ) << std::endl;
+  }
+
+  if( sp_result )
+  {
+    LOG( INFO ) << std::endl;
+    LOG( INFO ) << sp_operation->Present( ) + " " +
+      sp_data->Present( ) + ": " + sp_result->Present( );
+    LOG( INFO ) << std::endl;
+
+    sp_result.reset( );
   }
 
   sp_operation = FibonacciNumberOperation::NewSptr( );
@@ -80,5 +107,7 @@ int main( )
     LOG( INFO ) << sp_operation->Present( ) + " " +
       sp_data->Present( ) + ": " + sp_result->Present( );
     LOG( INFO ) << std::endl;
+
+    sp_result.reset( );
   }
 }

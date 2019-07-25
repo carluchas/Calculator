@@ -34,7 +34,7 @@ IResultSptr SeriesOperation::Execute( IDataSptr asp_data ) const noexcept( false
       preliminary_list_result.begin( ) +
       ( sp_interval->FirstValue( ) - 1 ),
       preliminary_list_result.begin( ) +
-      ( sp_interval->LastValue( ) - 1 ) );
+      ( sp_interval->LastValue( ) ) );
 
     auto sp_series = std::dynamic_pointer_cast
       <ListResult< unsigned long long >>( sp_to_return );
@@ -53,6 +53,13 @@ void SeriesOperation::AddNextSeriesNumber(
   noexcept( false )
 {
   auto old_size = ar_series.size( );
+
+  if( old_size > std::numeric_limits< size_t >::max( ) - 1 )
+  {
+    throw OperationException( "Next series number cannot be contained in "
+                              "the result output in this platform using "
+                              "the stl basic vector", __func__ );
+  }
 
   AddNextSeriesNumberSpecific( ar_series );
 

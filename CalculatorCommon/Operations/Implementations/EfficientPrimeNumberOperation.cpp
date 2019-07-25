@@ -1,28 +1,22 @@
 #include "Operations/Headers/OperationException.h"
-#include "Operations/Headers/PrimeNumberOperation.h"
+#include "Operations/Headers/EfficientPrimeNumberOperation.h"
 
-PrimeNumberOperation::PrimeNumberOperation( ) noexcept :
+EfficientPrimeNumberOperation::EfficientPrimeNumberOperation( ) noexcept :
   SeriesOperation( )
 {
 }
 
-IOperationSptr PrimeNumberOperation::NewSptr( ) noexcept
+IOperationSptr EfficientPrimeNumberOperation::NewSptr( ) noexcept
 {
-  return IOperationSptr( new PrimeNumberOperation( ) );
+  return IOperationSptr( new EfficientPrimeNumberOperation( ) );
 }
 
-std::string PrimeNumberOperation::Present( ) const noexcept
+std::string EfficientPrimeNumberOperation::Present( ) const noexcept
 {
-  return std::string( "Prime Numbers" );
+  return std::string( "Efficient Prime Numbers" );
 }
 
-std::vector<unsigned long long>
-PrimeNumberOperation::SeriesOrigin( ) const noexcept
-{
-  return std::vector<unsigned long long>( { 2, 3 } );
-}
-
-void PrimeNumberOperation::AddNextSeriesNumberSpecific(
+void EfficientPrimeNumberOperation::AddNextSeriesNumberSpecific(
   std::vector<unsigned long long>& ar_series ) const noexcept( false )
 {
   if( ar_series.empty( ) )
@@ -45,13 +39,13 @@ void PrimeNumberOperation::AddNextSeriesNumberSpecific(
   {
     to_add += 2;
 
-    prime = true;
+    auto root = sqrtl( long double( to_add ) );
 
-    for( unsigned long long i = 2;
-         2 * i <= to_add + 1 && prime;
-         i++ )
+    prime = ( floor( root ) > 0 );
+
+    for( unsigned int i = 0; ar_series[ i ] < root && prime; i++ )
     {
-      if( to_add % i == 0 )
+      if( to_add % ar_series[ i ] == 0 )
       {
         prime = false;
       }

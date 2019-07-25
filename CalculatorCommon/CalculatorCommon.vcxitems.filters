@@ -102,6 +102,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\SeriesOperation.h">
       <Filter>Operations\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\EfficientPrimeNumberOperation.h">
+      <Filter>Operations\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Data\Implementations\IntervalData.cpp">
@@ -126,6 +129,9 @@
       <Filter>Operations\Implementations</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\SeriesOperation.cpp">
+      <Filter>Operations\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\EfficientPrimeNumberOperation.cpp">
       <Filter>Operations\Implementations</Filter>
     </ClCompile>
   </ItemGroup>

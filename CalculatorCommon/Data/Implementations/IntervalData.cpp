@@ -43,5 +43,5 @@ unsigned int IntervalData::NumberOfValues( ) const noexcept
 
 unsigned int IntervalData::LastValue( ) const noexcept
 {
-  return FirstValue( ) + NumberOfValues( );
+  return FirstValue( ) + NumberOfValues( ) - 1;
 }

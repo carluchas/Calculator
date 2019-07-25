@@ -21,6 +21,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Data\Headers\IntervalData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Data\Interfaces\IData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Data\Interfaces\IDataSptr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\EfficientPrimeNumberOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\FibonacciNumberOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\OperationException.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\PrimeNumberOperation.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\easylogging++.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\OrdinalPresenter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Data\Implementations\IntervalData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\EfficientPrimeNumberOperation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\FibonacciNumberOperation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\OperationException.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\PrimeNumberOperation.cpp" />
