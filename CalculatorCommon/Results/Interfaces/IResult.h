@@ -8,11 +8,11 @@ class IResult : public IPresentable
 {
 public:
 
-  virtual ~IResult( ) = default;
+  virtual ~IResult( ) noexcept = default;
 
 protected:
 
-  IResult( ) = default;
+  IResult( ) noexcept = default;
 
 private:
 };

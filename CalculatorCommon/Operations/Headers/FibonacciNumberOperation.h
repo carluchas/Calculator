@@ -1,29 +1,33 @@
 #pragma once
 
 #include "Data/Interfaces/IDataSptr.h"
-#include "Operations/Headers/SeriesNumberOperation.h"
+#include "Operations/Headers/SeriesOperation.h"
 #include "Operations/Interfaces/IOperationSptr.h"
 #include <memory>
 
-class FibonacciNumberOperation : public virtual SeriesNumberOperation
+class FibonacciNumberOperation : public virtual SeriesOperation
 {
 public:
 
-  static IOperationSptr NewSptr( );
+  static IOperationSptr NewSptr( ) noexcept;
 
-  virtual ~FibonacciNumberOperation( ) = default;
+  virtual ~FibonacciNumberOperation( ) noexcept = default;
 
-  virtual std::string Present( ) const override;
+  virtual std::string Present( ) const noexcept override;
 
 protected:
 
-  FibonacciNumberOperation( );
+  FibonacciNumberOperation( ) noexcept;
+
+  virtual std::vector< unsigned long long >
+    SeriesOrigin( ) const noexcept override;
+
+  virtual void AddNextSeriesNumberSpecific(
+    std::vector< unsigned long long >& ar_series ) const noexcept( false ) override;
 
 private:
 
-  virtual std::vector< long long unsigned int >
-    SeriesOrigin( ) const override;
+  explicit FibonacciNumberOperation( const FibonacciNumberOperation& ar_operation ) noexcept = default;
 
-  virtual void AddNextSeriesNumberSpecific(
-    std::vector< long long unsigned int >& ar_series ) const override;
+  FibonacciNumberOperation& operator = ( const FibonacciNumberOperation& ar_operation ) noexcept = default;
 };

@@ -5,6 +5,7 @@
 #include "Data/Headers/IntervalData.h"
 #include "Data/Interfaces/IDataSptr.h"
 #include "Operations/Headers/FibonacciNumberOperation.h"
+#include "Operations/Headers/OperationException.h"
 #include "Operations/Headers/PrimeNumberOperation.h"
 #include <iostream>
 
@@ -37,7 +38,19 @@ int main( )
 
   auto sp_operation = PrimeNumberOperation::NewSptr( );
 
-  auto sp_result = sp_operation->Execute( sp_data );
+  IResultSptr sp_result;
+
+  try
+  {
+    sp_result = sp_operation->Execute( sp_data );
+  }
+  catch( const OperationException& ar_exception )
+  {
+    LOG( INFO ) << std::endl;
+    LOG( INFO ) << "Error processing " + sp_operation->Present( ) + ": " +
+      ar_exception.what( ) + " in " + ar_exception.where( );
+    LOG( INFO ) << std::endl;
+  }
 
   if( sp_result )
   {
@@ -49,7 +62,17 @@ int main( )
 
   sp_operation = FibonacciNumberOperation::NewSptr( );
 
-  sp_result = sp_operation->Execute( sp_data );
+  try
+  {
+    sp_result = sp_operation->Execute( sp_data );
+  }
+  catch( const OperationException& ar_exception )
+  {
+    LOG( INFO ) << std::endl;
+    LOG( INFO ) << "Error processing " + sp_operation->Present( ) + ": " +
+      ar_exception.what( ) + " in " + ar_exception.where( );
+    LOG( INFO ) << std::endl;
+  }
 
   if( sp_result )
   {

@@ -8,13 +8,11 @@ class IData : public IValidable, public IPresentable
 {
 public:
 
-  virtual ~IData( ) = default;
+  virtual ~IData( ) noexcept = default;
 
 protected:
 
-  IData( ) = default;
+  IData( ) noexcept = default;
 
 private:
 };
-
-using IDataBaseSptr = std::shared_ptr< IData >;

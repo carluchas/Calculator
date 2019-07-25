@@ -4,13 +4,13 @@ class IValidable
 {
 public:
 
-  virtual ~IValidable( ) = default;
+  virtual ~IValidable( ) noexcept = default;
 
-  virtual bool IsValid( ) const = 0;
+  virtual bool IsValid( ) const noexcept = 0;
 
 protected:
 
-  IValidable( ) = default;
+  IValidable( ) noexcept = default;
 
 private:
 };

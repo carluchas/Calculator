@@ -1,6 +1,6 @@
 #include "Basic/Headers/OrdinalPresenter.h"
 
-std::string OrdinalPresenter::OrdinalSuffix( unsigned int a_ordinal )
+std::string OrdinalPresenter::OrdinalSuffix( unsigned int a_ordinal ) const noexcept
 {
   std::string to_return;
 
@@ -33,7 +33,7 @@ std::string OrdinalPresenter::OrdinalSuffix( unsigned int a_ordinal )
   return to_return;
 }
 
-std::string OrdinalPresenter::ToOrdinal( unsigned int a_num )
+std::string OrdinalPresenter::ToOrdinal( unsigned int a_num ) const noexcept
 {
   std::string to_return;
 

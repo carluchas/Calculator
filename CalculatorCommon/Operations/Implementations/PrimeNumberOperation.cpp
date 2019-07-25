@@ -1,55 +1,65 @@
+#include "Operations/Headers/OperationException.h"
 #include "Operations/Headers/PrimeNumberOperation.h"
 
-PrimeNumberOperation::PrimeNumberOperation( ) :
-  SeriesNumberOperation( )
+PrimeNumberOperation::PrimeNumberOperation( ) noexcept :
+  SeriesOperation( )
 {
 }
 
-IOperationSptr PrimeNumberOperation::NewSptr( )
+IOperationSptr PrimeNumberOperation::NewSptr( ) noexcept
 {
   return IOperationSptr( new PrimeNumberOperation( ) );
 }
 
-std::string PrimeNumberOperation::Present( ) const
+std::string PrimeNumberOperation::Present( ) const noexcept
 {
   return std::string( "Prime Numbers" );
 }
 
-std::vector<long long unsigned int>
-PrimeNumberOperation::SeriesOrigin( ) const
+std::vector<unsigned long long>
+PrimeNumberOperation::SeriesOrigin( ) const noexcept
 {
-  return std::vector<long long unsigned int>( { 2 } );
+  return std::vector<unsigned long long>( { 2 } );
 }
 
 void PrimeNumberOperation::AddNextSeriesNumberSpecific(
-  std::vector<long long unsigned int>& ar_series ) const
+  std::vector<unsigned long long>& ar_series ) const noexcept( false )
 {
-  if( !ar_series.empty( ) )
+  if( ar_series.empty( ) )
   {
-    bool prime = false;
+    throw OperationException( "Insufficient values in given germen series "
+                              "to calculate a new one", __func__ );
+  }
 
-    long long unsigned int to_add = ar_series.back( );
+  if( ar_series.back( ) > ( std::numeric_limits< unsigned long long >::max( ) - 2 ) )
+  {
+    throw OperationException( "Next series number cannot be represented in this platform using "
+                              "integer basic language types", __func__ );
+  }
 
-    while( !prime )
+  bool prime = false;
+
+  unsigned long long to_add = ar_series.back( );
+
+  while( !prime )
+  {
+    to_add++;
+
+    prime = true;
+
+    for( unsigned long long i = 2;
+         2 * i <= to_add + 1 && prime;
+         i++ )
     {
-      to_add++;
-
-      prime = true;
-
-      for( long long unsigned int i = 2;
-           2 * i <= to_add + 1 && prime;
-           i++ )
+      if( to_add % i == 0 )
       {
-        if( to_add % i == 0 )
-        {
-          prime = false;
-        }
+        prime = false;
       }
     }
+  }
 
-    if( prime )
-    {
-      ar_series.emplace_back( to_add );
-    }
+  if( prime )
+  {
+    ar_series.emplace_back( to_add );
   }
 }

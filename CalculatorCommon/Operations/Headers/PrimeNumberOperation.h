@@ -1,29 +1,33 @@
 #pragma once
 
 #include "Data/Interfaces/IDataSptr.h"
-#include "Operations/Headers/SeriesNumberOperation.h"
+#include "Operations/Headers/SeriesOperation.h"
 #include "Operations/Interfaces/IOperationSptr.h"
 #include <memory>
 
-class PrimeNumberOperation : public virtual SeriesNumberOperation
+class PrimeNumberOperation : public virtual SeriesOperation
 {
 public:
 
-  static IOperationSptr NewSptr( );
+  static IOperationSptr NewSptr( ) noexcept;
 
-  virtual ~PrimeNumberOperation( ) = default;
+  virtual ~PrimeNumberOperation( ) noexcept = default;
 
-  virtual std::string Present( ) const override;
+  virtual std::string Present( ) const noexcept override;
 
 protected:
 
-  PrimeNumberOperation( );
+  PrimeNumberOperation( ) noexcept;
+
+  virtual std::vector< unsigned long long >
+    SeriesOrigin( ) const noexcept override;
+
+  virtual void AddNextSeriesNumberSpecific(
+    std::vector< unsigned long long >& ar_serie ) const noexcept( false ) override;
 
 private:
 
-  virtual std::vector< long long unsigned int >
-    SeriesOrigin( ) const override;
+  explicit PrimeNumberOperation( const PrimeNumberOperation& ar_operation ) noexcept = default;
 
-  virtual void AddNextSeriesNumberSpecific(
-    std::vector< long long unsigned int >& ar_serie ) const override;
+  PrimeNumberOperation& operator = ( const PrimeNumberOperation& ar_operation ) noexcept = default;
 };

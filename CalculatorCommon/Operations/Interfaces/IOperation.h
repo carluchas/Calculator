@@ -9,13 +9,13 @@ class IOperation : public IPresentable
 {
 public:
 
-  virtual ~IOperation( ) = default;
+  virtual ~IOperation( ) noexcept = default;
 
-  virtual IResultSptr Execute( IDataSptr asp_data ) const = 0;
+  virtual IResultSptr Execute( IDataSptr asp_data ) const noexcept( false ) = 0;
 
 protected:
 
-  IOperation( ) = default;
+  IOperation( ) noexcept = default;
 
 private:
 };

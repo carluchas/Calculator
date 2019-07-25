@@ -8,21 +8,25 @@ template <class T> class ListResult : public virtual IResult
 {
 public:
 
-  static IResultSptr NewSptr( );
+  static IResultSptr NewSptr( ) noexcept;
 
-  virtual ~ListResult( ) = default;
+  virtual ~ListResult( ) noexcept = default;
 
-  void SetList( const std::vector<T>& ar_list );
+  void SetList( const std::vector<T>& ar_list ) noexcept;
 
-  virtual std::string Present( ) const override;
+  virtual std::string Present( ) const noexcept override;
 
-  const std::vector<T>& List( ) const;
+  const std::vector<T>& List( ) const noexcept;
 
 protected:
 
-  ListResult( ) = default;
+  ListResult( ) noexcept = default;
 
 private:
 
   std::vector< T > _list;
+
+  explicit ListResult( const ListResult& ar_operation ) noexcept = default;
+
+  ListResult& operator = ( const ListResult& ar_operation ) noexcept = default;
 };

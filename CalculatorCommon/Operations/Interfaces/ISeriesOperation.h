@@ -7,16 +7,17 @@ class ISeriesOperation : public virtual IOperation
 {
 public:
 
-  virtual ~ISeriesOperation( ) = default;
+  virtual ~ISeriesOperation( ) noexcept = default;
 
 protected:
 
-  ISeriesOperation( ) = default;
+  ISeriesOperation( ) noexcept = default;
 
-  virtual std::vector< long long unsigned int > SeriesOrigin( ) const = 0;
+  virtual std::vector< unsigned long long > SeriesOrigin( ) const
+    noexcept = 0;
 
   virtual void AddNextSeriesNumber(
-    std::vector< long long unsigned int >& ar_series ) const
+    std::vector< unsigned long long >& ar_series ) const
     noexcept( false ) = 0;
 
 private:
