@@ -5,19 +5,19 @@
 #include "Operations/Interfaces/IOperationSptr.h"
 #include <memory>
 
-class PrimeNumberOperation : public virtual SeriesNumberOperation
+class FibonacciNumberOperation : public virtual SeriesNumberOperation
 {
 public:
 
   static IOperationSptr NewSptr( );
 
-  virtual ~PrimeNumberOperation( ) = default;
+  virtual ~FibonacciNumberOperation( ) = default;
 
   virtual std::string Present( ) const override;
 
 protected:
 
-  PrimeNumberOperation( );
+  FibonacciNumberOperation( );
 
 private:
 
@@ -25,5 +25,5 @@ private:
     SeriesOrigin( ) const override;
 
   virtual void AddNextSeriesNumberSpecific(
-    std::vector< long long unsigned int >& ar_serie ) const override;
+    std::vector< long long unsigned int >& ar_series ) const override;
 };

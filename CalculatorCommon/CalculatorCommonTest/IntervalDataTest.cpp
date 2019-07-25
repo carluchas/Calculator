@@ -1,7 +1,10 @@
+#include "Basic/Headers/easylogging++.h"
 #include "Basic/Headers/OrdinalPresenter.h"
 #include "Data/Headers/IntervalData.h"
 #include "gtest/gtest.h"
 #include <string>
+
+INITIALIZE_EASYLOGGINGPP
 
 TEST( IntervalDataTestCase, IntervalDataTest )
 {

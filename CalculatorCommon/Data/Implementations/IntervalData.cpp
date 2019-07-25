@@ -13,7 +13,7 @@ IDataSptr IntervalData::NewSptr( unsigned int a_first_value, unsigned int a_numb
   return IDataSptr( new IntervalData( a_first_value, a_number_of_values ) );
 }
 
-std::string IntervalData::Present( )
+std::string IntervalData::Present( ) const
 {
   std::string to_return( "From the " );
 
@@ -26,6 +26,11 @@ std::string IntervalData::Present( )
   return to_return;
 }
 
+bool IntervalData::IsValid( ) const
+{
+  return ( ( FirstValue( ) >= 1 ) && ( NumberOfValues( ) > 0 ) );
+}
+
 unsigned int IntervalData::FirstValue( ) const
 {
   return _first_value;
@@ -34,4 +39,9 @@ unsigned int IntervalData::FirstValue( ) const
 unsigned int IntervalData::NumberOfValues( ) const
 {
   return _number_of_values;
+}
+
+unsigned int IntervalData::LastValue( ) const
+{
+  return FirstValue( ) + NumberOfValues( );
 }

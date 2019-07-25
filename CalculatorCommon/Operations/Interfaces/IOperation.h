@@ -11,7 +11,7 @@ public:
 
   virtual ~IOperation( ) = default;
 
-  virtual IResultSptr Execute( IDataSptr asp_data ) = 0;
+  virtual IResultSptr Execute( IDataSptr asp_data ) const = 0;
 
 protected:
 

@@ -1,12 +1,7 @@
-#include "Data/Headers/IntervalData.h"
 #include "Operations/Headers/PrimeNumberOperation.h"
-#include "Operations/Interfaces/IOperationSptr.h"
-#include "Results/Headers/ListResult.h"
-#include "Results/Implementations/ListResult.cpp"
-#include <list>
 
 PrimeNumberOperation::PrimeNumberOperation( ) :
-  IOperation( )
+  SeriesNumberOperation( )
 {
 }
 
@@ -15,60 +10,46 @@ IOperationSptr PrimeNumberOperation::NewSptr( )
   return IOperationSptr( new PrimeNumberOperation( ) );
 }
 
-std::string PrimeNumberOperation::Present( )
+std::string PrimeNumberOperation::Present( ) const
 {
   return std::string( "Prime Numbers" );
 }
 
-IResultSptr PrimeNumberOperation::Execute( IDataSptr asp_data )
+std::vector<long long unsigned int>
+PrimeNumberOperation::SeriesOrigin( ) const
 {
-  auto sp_interval = std::dynamic_pointer_cast<IntervalData>( asp_data );
+  return std::vector<long long unsigned int>( { 2 } );
+}
 
-  if( sp_interval )
+void PrimeNumberOperation::AddNextSeriesNumberSpecific(
+  std::vector<long long unsigned int>& ar_series ) const
+{
+  if( !ar_series.empty( ) )
   {
-    std::list< unsigned int > list_result;
+    bool prime = false;
 
-    auto first_to_show = sp_interval->FirstValue( );
-    auto prime_to_show = sp_interval->NumberOfValues( );
+    long long unsigned int to_add = ar_series.back( );
 
-    unsigned int current_prime = 2;
-
-    while( prime_to_show > 0 )
+    while( !prime )
     {
-      bool prime = true;
+      to_add++;
 
-      for( unsigned long i = 2; i < abs( long long( current_prime / 2 ) ) + 1 && prime; ++i )
+      prime = true;
+
+      for( long long unsigned int i = 2;
+           2 * i <= to_add + 1 && prime;
+           i++ )
       {
-        if( current_prime % i == 0 )
+        if( to_add % i == 0 )
         {
           prime = false;
         }
       }
-
-      if( prime )
-      {
-        if( first_to_show > 0 )
-        {
-          first_to_show--;
-        }
-
-        if( first_to_show == 0 )
-        {
-          list_result.emplace_back( current_prime );
-
-          prime_to_show--;
-        }
-      }
-
-      current_prime++;
     }
 
-    auto sp_to_return = ListResult< unsigned int >::NewSptr( );
-
-    std::dynamic_pointer_cast<ListResult< unsigned int >>( sp_to_return )->SetList( list_result );
-
-    return IResultSptr( sp_to_return );
+    if( prime )
+    {
+      ar_series.emplace_back( to_add );
+    }
   }
-
-  return IResultSptr( );
 }

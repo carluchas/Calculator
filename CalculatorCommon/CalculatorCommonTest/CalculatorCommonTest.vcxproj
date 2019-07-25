@@ -36,7 +36,9 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="IntervalDataTest.cpp" />
+    <ClCompile Include="ListResultTest.cpp" />
     <ClCompile Include="OrdinalPresenterTest.cpp" />
+    <ClCompile Include="PrimeNumberOperationTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

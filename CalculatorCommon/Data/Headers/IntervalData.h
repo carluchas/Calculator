@@ -8,19 +8,25 @@ class IntervalData : public virtual IData
 {
 public:
 
-  static IDataSptr NewSptr( unsigned int a_first_value, unsigned int a_number_of_values );
+  static IDataSptr NewSptr( unsigned int a_first_value,
+                            unsigned int a_number_of_values );
 
   virtual ~IntervalData( ) = default;
 
-  virtual std::string Present( ) override;
+  virtual std::string Present( ) const override;
+
+  virtual bool IsValid( ) const override;
 
   unsigned int FirstValue( ) const;
 
   unsigned int NumberOfValues( ) const;
 
+  unsigned int LastValue( ) const;
+
 protected:
 
-  IntervalData( unsigned int a_first_value = 0, unsigned int a_number_of_values = 0 );
+  IntervalData( unsigned int a_first_value = 0,
+                unsigned int a_number_of_values = 0 );
 
 private:
 

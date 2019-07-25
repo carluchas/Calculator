@@ -5,12 +5,12 @@ template<class T> IResultSptr ListResult<T>::NewSptr( )
   return IResultSptr( new ListResult< T >( ) );
 }
 
-template<class T> void ListResult<T>::SetList( const std::list<T>& ar_list )
+template<class T> void ListResult<T>::SetList( const std::vector<T>& ar_list )
 {
   _list = ar_list;
 }
 
-template<class T> std::string ListResult<T>::Present( )
+template<class T> std::string ListResult<T>::Present( ) const
 {
   std::string to_return;
 
@@ -27,7 +27,7 @@ template<class T> std::string ListResult<T>::Present( )
   return to_return;
 }
 
-template<class T> const std::list<T>& ListResult<T>::List( ) const
+template<class T> const std::vector<T>& ListResult<T>::List( ) const
 {
   return _list;
 }

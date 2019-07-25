@@ -8,7 +8,7 @@ public:
 
   virtual ~IPresentable( ) = default;
 
-  virtual std::string Present( ) = 0;
+  virtual std::string Present( ) const = 0;
 
 protected:
 

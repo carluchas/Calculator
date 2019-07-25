@@ -2,7 +2,7 @@
 
 #include "Results/Interfaces/IResult.h"
 #include "Results/Interfaces/IResultSptr.h"
-#include <list>
+#include <vector>
 
 template <class T> class ListResult : public virtual IResult
 {
@@ -12,11 +12,11 @@ public:
 
   virtual ~ListResult( ) = default;
 
-  void SetList( const std::list<T>& ar_list );
+  void SetList( const std::vector<T>& ar_list );
 
-  virtual std::string Present( ) override;
+  virtual std::string Present( ) const override;
 
-  const std::list<T>& List( ) const;
+  const std::vector<T>& List( ) const;
 
 protected:
 
@@ -24,5 +24,5 @@ protected:
 
 private:
 
-  std::list< T > _list;
+  std::vector< T > _list;
 };

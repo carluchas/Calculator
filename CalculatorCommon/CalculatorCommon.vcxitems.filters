@@ -81,7 +81,27 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\IPresentable.h">
       <Filter>Basic\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\OrdinalPresenter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\OrdinalPresenter.h">
+      <Filter>Basic\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\easylogging++.h">
+      <Filter>Basic\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\FibonacciNumberOperation.h">
+      <Filter>Operations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\ISeriesOperation.h">
+      <Filter>Operations\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\SeriesNumberOperation.h">
+      <Filter>Operations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\IValidable.h">
+      <Filter>Basic\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\OperationException.h">
+      <Filter>Operations\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Data\Implementations\IntervalData.cpp">
@@ -93,6 +113,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Results\Implementations\ListResult.cpp">
       <Filter>Results\Implementations</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\OrdinalPresenter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\OrdinalPresenter.cpp">
+      <Filter>Basic\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\easylogging++.cpp">
+      <Filter>Basic\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\FibonacciNumberOperation.cpp">
+      <Filter>Operations\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\SeriesNumberOperation.cpp">
+      <Filter>Operations\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\OperationException.cpp">
+      <Filter>Operations\Implementations</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
