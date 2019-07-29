@@ -29,10 +29,10 @@ int main( )
   unsigned int first = 1;
   unsigned long size = 3;
 
-  LOG( INFO ) << "First prime number to show: ";
+  LOG( INFO ) << "First series number to show: ";
   scanf_s( "%d", &first );
 
-  LOG( INFO ) << "Number of prime numbers to show: ";
+  LOG( INFO ) << "Number of series numbers to show: ";
   scanf_s( "%d", &size );
 
   auto sp_data = IDataSptr( IntervalData::NewSptr( first, size ) );

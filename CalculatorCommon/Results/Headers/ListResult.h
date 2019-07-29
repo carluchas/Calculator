@@ -14,6 +14,8 @@ public:
 
   void SetList( const std::vector<T>& ar_list ) noexcept;
 
+  virtual bool IsValid( ) const noexcept override;
+
   virtual std::string Present( ) const noexcept override;
 
   const std::vector<T>& List( ) const noexcept;

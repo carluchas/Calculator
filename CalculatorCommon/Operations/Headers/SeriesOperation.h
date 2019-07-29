@@ -13,7 +13,8 @@ public:
 
   virtual std::string Present( ) const noexcept override;
 
-  virtual IResultSptr Execute( IDataSptr asp_data ) const noexcept( false ) override final;
+  virtual IResultSptr Execute( IDataSptr asp_data ) const noexcept( false )
+    override final;
 
   virtual void AddNextSeriesNumberSpecific(
     std::vector< unsigned long long >& ar_series ) const noexcept( false ) = 0;
@@ -28,7 +29,9 @@ protected:
 
 private:
 
-  explicit SeriesOperation( const SeriesOperation& ar_operation ) noexcept = default;
+  explicit SeriesOperation( const SeriesOperation& ar_operation )
+    noexcept = default;
 
-  SeriesOperation& operator = ( const SeriesOperation& ar_operation ) noexcept = default;
+  SeriesOperation& operator = ( const SeriesOperation& ar_operation )
+    noexcept = default;
 };

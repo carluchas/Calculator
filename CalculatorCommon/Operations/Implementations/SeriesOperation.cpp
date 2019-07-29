@@ -15,7 +15,8 @@ std::string SeriesOperation::Present( ) const noexcept
   return std::string( "Prime Numbers" );
 }
 
-IResultSptr SeriesOperation::Execute( IDataSptr asp_data ) const noexcept( false )
+IResultSptr SeriesOperation::Execute( IDataSptr asp_data )
+const noexcept( false )
 {
   auto sp_to_return = ListResult< unsigned long long >::NewSptr( );
 
@@ -43,6 +44,17 @@ IResultSptr SeriesOperation::Execute( IDataSptr asp_data ) const noexcept( false
     {
       sp_series->SetList( list_to_return );
     }
+  }
+  else
+  {
+    throw OperationException( "No valid data provided for this operation",
+                              __func__ );
+  }
+
+  if( !sp_to_return || !sp_to_return->IsValid( ) )
+  {
+    throw OperationException( "No valid result obtained for this operation",
+                              __func__ );
   }
 
   return sp_to_return;

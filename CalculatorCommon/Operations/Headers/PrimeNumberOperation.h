@@ -23,11 +23,14 @@ protected:
     SeriesOrigin( ) const noexcept override;
 
   virtual void AddNextSeriesNumberSpecific(
-    std::vector< unsigned long long >& ar_serie ) const noexcept( false ) override;
+    std::vector< unsigned long long >& ar_serie )
+    const noexcept( false ) override;
 
 private:
 
-  explicit PrimeNumberOperation( const PrimeNumberOperation& ar_operation ) noexcept = default;
+  explicit PrimeNumberOperation( const PrimeNumberOperation& ar_operation )
+    noexcept = default;
 
-  PrimeNumberOperation& operator = ( const PrimeNumberOperation& ar_operation ) noexcept = default;
+  PrimeNumberOperation& operator = ( const PrimeNumberOperation& ar_operation )
+    noexcept = default;
 };

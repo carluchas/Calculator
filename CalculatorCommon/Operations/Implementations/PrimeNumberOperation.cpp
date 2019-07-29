@@ -31,10 +31,12 @@ void PrimeNumberOperation::AddNextSeriesNumberSpecific(
                               "to calculate a new one", __func__ );
   }
 
-  if( ar_series.back( ) > ( std::numeric_limits< unsigned long long >::max( ) - 2 ) )
+  if( ar_series.back( ) >
+    ( std::numeric_limits< unsigned long long >::max( ) - 2 ) )
   {
-    throw OperationException( "Next series number cannot be represented in this platform using "
-                              "integer basic language types", __func__ );
+    throw OperationException( "Next series number cannot be represented in this"
+                              " platform using integer basic language types",
+                              __func__ );
   }
 
   bool prime = false;

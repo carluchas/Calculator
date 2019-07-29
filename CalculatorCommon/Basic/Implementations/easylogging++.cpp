@@ -175,7 +175,7 @@ namespace el
     return Level::Unknown;
   }
 
-  void LevelHelper::forEachLevel( base::type::EnumType* startIndex, const std::function<bool( void )>& fn )
+  void LevelHelper::forEachLevel( base::type::EnumType* startIndex, const std::function<bool( )>& fn )
   {
     base::type::EnumType lIndexMax = LevelHelper::kMaxValid;
     do
@@ -237,7 +237,7 @@ namespace el
     return ConfigurationType::Unknown;
   }
 
-  void ConfigurationTypeHelper::forEachConfigType( base::type::EnumType* startIndex, const std::function<bool( void )>& fn )
+  void ConfigurationTypeHelper::forEachConfigType( base::type::EnumType* startIndex, const std::function<bool( )>& fn )
   {
     base::type::EnumType cIndexMax = ConfigurationTypeHelper::kMaxValid;
     do
@@ -300,7 +300,7 @@ namespace el
 
   // Configurations
 
-  Configurations::Configurations( void ) :
+  Configurations::Configurations( ) :
     m_configurationFile( std::string( ) ),
     m_isFromFile( false )
   {
@@ -361,7 +361,7 @@ namespace el
   {
     base::type::EnumType lIndex = LevelHelper::kMinValid;
     bool result = false;
-    LevelHelper::forEachLevel( &lIndex, [ & ]( void ) -> bool
+    LevelHelper::forEachLevel( &lIndex, [ & ]( ) -> bool
                                {
                                  if( hasConfiguration( LevelHelper::castFromInt( lIndex ), configurationType ) )
                                  {
@@ -403,7 +403,7 @@ namespace el
     set( conf->level( ), conf->configurationType( ), conf->value( ) );
   }
 
-  void Configurations::setToDefault( void )
+  void Configurations::setToDefault( )
   {
     setGlobally( ConfigurationType::Enabled, std::string( "true" ), true );
     setGlobally( ConfigurationType::Filename, std::string( base::consts::kDefaultLogFile ), true );
@@ -428,7 +428,7 @@ namespace el
     set( Level::Trace, ConfigurationType::Format, std::string( "%datetime %level [%logger] [%func] [%loc] %msg" ) );
   }
 
-  void Configurations::setRemainingToDefault( void )
+  void Configurations::setRemainingToDefault( )
   {
     base::threading::ScopedLock scopedLock( lock( ) );
 #if defined(ELPP_NO_LOG_TO_FILE)
@@ -527,7 +527,7 @@ namespace el
   bool Configurations::Parser::isConfig( const std::string& line )
   {
     std::size_t assignment = line.find( '=' );
-    return line != "" &&
+    return !line.empty( ) &&
       ( ( line[ 0 ] >= 'A' && line[ 0 ] <= 'Z' ) || ( line[ 0 ] >= 'a' && line[ 0 ] <= 'z' ) ) &&
       ( assignment != std::string::npos ) &&
       ( line.size( ) > assignment );
@@ -637,7 +637,7 @@ namespace el
       set( Level::Global, configurationType, value );
     }
     base::type::EnumType lIndex = LevelHelper::kMinValid;
-    LevelHelper::forEachLevel( &lIndex, [ & ]( void ) -> bool
+    LevelHelper::forEachLevel( &lIndex, [ & ]( ) -> bool
                                {
                                  set( LevelHelper::castFromInt( lIndex ), configurationType, value );
                                  return false;  // Do not break lambda function yet as we need to set all levels regardless
@@ -652,7 +652,7 @@ namespace el
       unsafeSet( Level::Global, configurationType, value );
     }
     base::type::EnumType lIndex = LevelHelper::kMinValid;
-    LevelHelper::forEachLevel( &lIndex, [ & ]( void ) -> bool
+    LevelHelper::forEachLevel( &lIndex, [ & ]( ) -> bool
                                {
                                  unsafeSet( LevelHelper::castFromInt( lIndex ), configurationType, value );
                                  return false;  // Do not break lambda function yet as we need to set all levels regardless
@@ -735,7 +735,7 @@ namespace el
     initUnflushedCount( );
     if( m_typedConfigurations != nullptr )
     {
-      Configurations* c = const_cast<Configurations*>( m_typedConfigurations->configurations( ) );
+      auto* c = const_cast<Configurations*>( m_typedConfigurations->configurations( ) );
       if( c->hasConfiguration( Level::Global, ConfigurationType::Filename ) )
       {
         flush( );
@@ -752,7 +752,7 @@ namespace el
     m_isConfigured = true;
   }
 
-  void Logger::reconfigure( void )
+  void Logger::reconfigure( )
   {
     ELPP_INTERNAL_INFO( 1, "Reconfiguring logger [" << m_id << "]" );
     configure( m_configurations );
@@ -760,9 +760,9 @@ namespace el
 
   bool Logger::isValidId( const std::string& id )
   {
-    for( std::string::const_iterator it = id.begin( ); it != id.end( ); ++it )
+    for( const char it : id )
     {
-      if( !base::utils::Str::contains( base::consts::kValidLoggerIdSymbols, *it ) )
+      if( !base::utils::Str::contains( base::consts::kValidLoggerIdSymbols, it ) )
       {
         return false;
       }
@@ -770,12 +770,12 @@ namespace el
     return true;
   }
 
-  void Logger::flush( void )
+  void Logger::flush( )
   {
     ELPP_INTERNAL_INFO( 3, "Flushing logger [" << m_id << "] all levels" );
     base::threading::ScopedLock scopedLock( lock( ) );
     base::type::EnumType lIndex = LevelHelper::kMinValid;
-    LevelHelper::forEachLevel( &lIndex, [ & ]( void ) -> bool
+    LevelHelper::forEachLevel( &lIndex, [ & ]( ) -> bool
                                {
                                  flush( LevelHelper::castFromInt( lIndex ), nullptr );
                                  return false;
@@ -791,7 +791,7 @@ namespace el
     if( fs != nullptr )
     {
       fs->flush( );
-      std::unordered_map<Level, unsigned int>::iterator iter = m_unflushedCount.find( level );
+      auto iter = m_unflushedCount.find( level );
       if( iter != m_unflushedCount.end( ) )
       {
         iter->second = 0;
@@ -800,23 +800,23 @@ namespace el
     }
   }
 
-  void Logger::initUnflushedCount( void )
+  void Logger::initUnflushedCount( )
   {
     m_unflushedCount.clear( );
     base::type::EnumType lIndex = LevelHelper::kMinValid;
-    LevelHelper::forEachLevel( &lIndex, [ & ]( void ) -> bool
+    LevelHelper::forEachLevel( &lIndex, [ & ]( ) -> bool
                                {
                                  m_unflushedCount.insert( std::make_pair( LevelHelper::castFromInt( lIndex ), 0 ) );
                                  return false;
                                } );
   }
 
-  void Logger::resolveLoggerFormatSpec( void ) const
+  void Logger::resolveLoggerFormatSpec( ) const
   {
     base::type::EnumType lIndex = LevelHelper::kMinValid;
-    LevelHelper::forEachLevel( &lIndex, [ & ]( void ) -> bool
+    LevelHelper::forEachLevel( &lIndex, [ & ]( ) -> bool
                                {
-                                 base::LogFormat* logFormat =
+                                 auto* logFormat =
                                    const_cast<base::LogFormat*>( &m_typedConfigurations->logFormat( LevelHelper::castFromInt( lIndex ) ) );
                                  base::utils::Str::replaceFirstWithEscape( logFormat->m_format, base::consts::kLoggerIdFormatSpecifier, m_id );
                                  return false;
@@ -833,10 +833,10 @@ namespace el
 
       base::type::fstream_t* File::newFileStream( const std::string& filename )
       {
-        base::type::fstream_t* fs = new base::type::fstream_t( filename.c_str( ),
-                                                               base::type::fstream_t::out
+        auto* fs = new base::type::fstream_t( filename.c_str( ),
+                                              base::type::fstream_t::out
 #if !defined(ELPP_FRESH_LOG_FILE)
-                                                               | base::type::fstream_t::app
+                                              | base::type::fstream_t::app
 #endif
         );
 #if defined(ELPP_UNICODE)
@@ -867,7 +867,7 @@ namespace el
         }
         // Since the file stream is appended to or truncated, the current
         // offset is the file size.
-        std::size_t size = static_cast<std::size_t>( fs->tellg( ) );
+        auto size = static_cast<std::size_t>( fs->tellg( ) );
         return size;
       }
 
@@ -903,7 +903,7 @@ namespace el
         }
         int status = -1;
 
-        char* currPath = const_cast<char*>( path.c_str( ) );
+        auto* currPath = const_cast<char*>( path.c_str( ) );
         std::string builtPath = std::string( );
 #if ELPP_OS_UNIX
         if( path[ 0 ] == '/' )
@@ -939,7 +939,7 @@ namespace el
 
       std::string File::extractPathFromFilename( const std::string& fullPath, const char* separator )
       {
-        if( ( fullPath == "" ) || ( fullPath.find( separator ) == std::string::npos ) )
+        if( ( fullPath.empty( ) ) || ( fullPath.find( separator ) == std::string::npos ) )
         {
           return fullPath;
         }
@@ -1178,7 +1178,7 @@ namespace el
       char* Str::wcharPtrToCharPtr( const wchar_t* line )
       {
         std::size_t len_ = wcslen( line ) + 1;
-        char* buff_ = static_cast<char*>( malloc( len_ + 1 ) );
+        auto* buff_ = static_cast<char*>( malloc( len_ + 1 ) );
 #      if ELPP_OS_UNIX || (ELPP_OS_WINDOWS && !ELPP_CRT_DBG_WARNINGS)
         std::wcstombs( buff_, line, len_ );
 #      elif ELPP_OS_WINDOWS
@@ -1216,7 +1216,7 @@ namespace el
         return ret == 0 ? std::string( ) : std::string( propVal );
       }
 
-      std::string OS::getDeviceName( void )
+      std::string OS::getDeviceName( )
       {
         std::stringstream ss;
         std::string manufacturer = getProperty( "ro.product.manufacturer" );
@@ -1294,7 +1294,7 @@ namespace el
         return std::string( val );
       }
 
-      std::string OS::currentUser( void )
+      std::string OS::currentUser( )
       {
 #if ELPP_OS_UNIX && !ELPP_OS_ANDROID
         return getEnvironmentVariable( "USER", base::consts::kUnknownUser, "whoami" );
@@ -1308,7 +1308,7 @@ namespace el
 #endif  // ELPP_OS_UNIX && !ELPP_OS_ANDROID
       }
 
-      std::string OS::currentHost( void )
+      std::string OS::currentHost( )
       {
 #if ELPP_OS_UNIX && !ELPP_OS_ANDROID
         return getEnvironmentVariable( "HOSTNAME", base::consts::kUnknownHost, "hostname" );
@@ -1322,7 +1322,7 @@ namespace el
 #endif  // ELPP_OS_UNIX && !ELPP_OS_ANDROID
       }
 
-      bool OS::termSupportsColor( void )
+      bool OS::termSupportsColor( )
       {
         std::string term = getEnvironmentVariable( "TERM", "" );
         return term == "xterm" || term == "xterm-color" || term == "xterm-256color"
@@ -1382,7 +1382,7 @@ namespace el
 
       base::type::string_t DateTime::formatTime( unsigned long long time, base::TimestampUnit timestampUnit )
       {
-        base::type::EnumType start = static_cast<base::type::EnumType>( timestampUnit );
+        auto start = static_cast<base::type::EnumType>( timestampUnit );
         const base::type::char_t* unit = base::consts::kTimeFormats[ start ].unit;
         for( base::type::EnumType i = start; i < base::consts::kTimeFormatsCount - 1; ++i )
         {
@@ -1407,13 +1407,22 @@ namespace el
       {
         if( timestampUnit == base::TimestampUnit::Microsecond )
         {
-          return static_cast<unsigned long long>( static_cast<unsigned long long>( 1000000 * endTime.tv_sec + endTime.tv_usec ) -
-                                                  static_cast<unsigned long long>( 1000000 * startTime.tv_sec + startTime.tv_usec ) );
+          return static_cast<unsigned long long>(
+            static_cast<unsigned long long>( 1000000 *
+            static_cast<unsigned long long>
+            ( static_cast<unsigned long long>( endTime.tv_sec ) +
+            static_cast<unsigned long long>( endTime.tv_usec ) ) ) -
+            static_cast<unsigned long long>( 1000000 *
+            static_cast<unsigned long long>
+            ( static_cast<unsigned long long>( startTime.tv_sec ) +
+            static_cast<unsigned long long>( startTime.tv_usec ) ) ) );
         }
         // milliseconds
         auto conv = []( const struct timeval& tim )
         {
-          return static_cast<unsigned long long>( ( tim.tv_sec * 1000 ) + ( tim.tv_usec / 1000 ) );
+          return static_cast<unsigned long long>( (
+            static_cast<unsigned long long>( tim.tv_sec ) * 1000 ) +
+            ( static_cast<unsigned long long>( tim.tv_usec ) / 1000 ) );
         };
         return static_cast<unsigned long long>( conv( endTime ) - conv( startTime ) );
       }
@@ -1443,7 +1452,7 @@ namespace el
         return timeInfo;
 #  endif  // ELPP_COMPILER_MSVC
 #endif  // ELPP_OS_UNIX
-      }
+    }
 
       char* DateTime::parseFormat( char* buf, std::size_t bufSz, const char* format, const struct tm* tInfo,
                                    std::size_t msec, const base::SubsecondPrecision* ssPrec )
@@ -1550,7 +1559,7 @@ namespace el
             }
             else
             {
-              m_params.push_back( std::string( m_argv[ i ] ) );
+              m_params.emplace_back( m_argv[ i ] );
             }
           }
         }
@@ -1563,7 +1572,7 @@ namespace el
 
       const char* CommandLineArgs::getParamValue( const char* paramKey ) const
       {
-        std::unordered_map<std::string, std::string>::const_iterator iter = m_paramsWithValue.find( std::string( paramKey ) );
+        auto iter = m_paramsWithValue.find( std::string( paramKey ) );
         return iter != m_paramsWithValue.end( ) ? iter->second.c_str( ) : "";
       }
 
@@ -1572,12 +1581,12 @@ namespace el
         return std::find( m_params.begin( ), m_params.end( ), std::string( paramKey ) ) != m_params.end( );
       }
 
-      bool CommandLineArgs::empty( void ) const
+      bool CommandLineArgs::empty( ) const
       {
         return m_params.empty( ) && m_paramsWithValue.empty( );
       }
 
-      std::size_t CommandLineArgs::size( void ) const
+      std::size_t CommandLineArgs::size( ) const
       {
         return m_params.size( ) + m_paramsWithValue.size( );
       }
@@ -1594,9 +1603,9 @@ namespace el
         }
         return os;
       }
-    } // namespace utils
+  } // namespace utils
 
-    // el::base::threading
+  // el::base::threading
     namespace threading
     {
 #if ELPP_THREADING_ENABLED
@@ -1614,11 +1623,11 @@ namespace el
 #      endif  // ELPP_ASYNC_LOGGING
 #  endif  // !ELPP_USE_STD_THREADING
 #endif  // ELPP_THREADING_ENABLED
-    } // namespace threading
+} // namespace threading
 
-    // el::base
+// el::base
 
-    // SubsecondPrecision
+// SubsecondPrecision
 
     void SubsecondPrecision::init( int width )
     {
@@ -1649,7 +1658,7 @@ namespace el
 
     // LogFormat
 
-    LogFormat::LogFormat( void ) :
+    LogFormat::LogFormat( ) :
       m_level( Level::Unknown ),
       m_userFormat( base::type::string_t( ) ),
       m_format( base::type::string_t( ) ),
@@ -1678,7 +1687,7 @@ namespace el
     {
     }
 
-    LogFormat::LogFormat( LogFormat&& logFormat )
+    LogFormat::LogFormat( LogFormat&& logFormat ) noexcept
     {
       m_level = std::move( logFormat.m_level );
       m_userFormat = std::move( logFormat.m_userFormat );
@@ -1806,7 +1815,7 @@ namespace el
       }
     }
 
-    void LogFormat::updateFormatSpec( void )
+    void LogFormat::updateFormatSpec( )
     {
       // Do not use switch over strongly typed enums because Intel C++ compilers dont support them yet.
       if( m_level == Level::Debug )
@@ -2013,11 +2022,10 @@ namespace el
           insertFile( conf->level( ), conf->value( ) );
         }
       }
-      for( std::vector<Configuration*>::iterator conf = withFileSizeLimit.begin( );
-           conf != withFileSizeLimit.end( ); ++conf )
+      for( auto& conf : withFileSizeLimit )
       {
         // This is not unsafe as mutex is locked in currect scope
-        unsafeValidateFileRolling( ( *conf )->level( ), base::defaultPreRollOutCallback );
+        unsafeValidateFileRolling( conf->level( ), base::defaultPreRollOutCallback );
       }
     }
 
@@ -2102,7 +2110,7 @@ namespace el
       }
       auto create = [ & ]( Level level )
       {
-        base::LogStreamsReferenceMap::iterator filestreamIter = m_logStreamsReference->find( resolvedFilename );
+        auto filestreamIter = m_logStreamsReference->find( resolvedFilename );
         base::type::fstream_t* fs = nullptr;
         if( filestreamIter == m_logStreamsReference->end( ) )
         {
@@ -2258,14 +2266,13 @@ namespace el
       return true;
     }
 
-    void RegisteredLoggers::unsafeFlushAll( void )
+    void RegisteredLoggers::unsafeFlushAll( )
     {
       ELPP_INTERNAL_INFO( 1, "Flushing all log files" );
-      for( base::LogStreamsReferenceMap::iterator it = m_logStreamsReference.begin( );
-           it != m_logStreamsReference.end( ); ++it )
+      for( auto& it : m_logStreamsReference )
       {
-        if( it->second.get( ) == nullptr ) continue;
-        it->second->flush( );
+        if( it.second == nullptr ) continue;
+        it.second->flush( );
       }
     }
 
@@ -2382,7 +2389,7 @@ namespace el
       {
         char baseFilename[ base::consts::kSourceFilenameMaxLength ] = "";
         base::utils::File::buildBaseFilename( file, baseFilename );
-        std::unordered_map<std::string, base::type::VerboseLevel>::iterator it = m_modules.begin( );
+        auto it = m_modules.begin( );
         for( ; it != m_modules.end( ); ++it )
         {
           if( base::utils::Str::wildCardMatch( baseFilename, it->first.c_str( ) ) )
@@ -2479,7 +2486,7 @@ namespace el
 #endif  // ELPP_ASYNC_LOGGING
     }
 
-    Storage::~Storage( void )
+    Storage::~Storage( )
     {
       ELPP_INTERNAL_INFO( 4, "Destroying storage" );
 #if ELPP_ASYNC_LOGGING
@@ -2519,8 +2526,8 @@ namespace el
     bool Storage::uninstallCustomFormatSpecifier( const char* formatSpecifier )
     {
       base::threading::ScopedLock scopedLock( customFormatSpecifiersLock( ) );
-      std::vector<CustomFormatSpecifier>::iterator it = std::find( m_customFormatSpecifiers.begin( ),
-                                                                   m_customFormatSpecifiers.end( ), formatSpecifier );
+      auto it = std::find( m_customFormatSpecifiers.begin( ),
+                           m_customFormatSpecifiers.end( ), formatSpecifier );
       if( it != m_customFormatSpecifiers.end( ) && strcmp( formatSpecifier, it->formatSpecifier( ) ) == 0 )
       {
         m_customFormatSpecifiers.erase( it );
@@ -2541,10 +2548,9 @@ namespace el
         c.setGlobally( ConfigurationType::Filename,
                        std::string( m_commandLineArgs.getParamValue( base::consts::kDefaultLogFileParam ) ) );
         registeredLoggers( )->setDefaultConfigurations( c );
-        for( base::RegisteredLoggers::iterator it = registeredLoggers( )->begin( );
-             it != registeredLoggers( )->end( ); ++it )
+        for( auto& it : *registeredLoggers( ) )
         {
-          it->second->configure( c );
+          it.second->configure( c );
         }
       }
 #endif  // !defined(ELPP_DISABLE_LOG_FILE_FROM_ARG)
@@ -2559,13 +2565,13 @@ namespace el
         else
         {
           base::utils::addFlag<base::type::EnumType>( userInput, &m_flags );
-        }
       }
-#endif  // defined(ELPP_LOGGING_FLAGS_FROM_ARG)
     }
-  } // namespace base
+#endif  // defined(ELPP_LOGGING_FLAGS_FROM_ARG)
+      }
+    } // namespace base
 
-  // LogDispatchCallback
+    // LogDispatchCallback
   void LogDispatchCallback::handle( const LogDispatchData* data )
   {
 #if defined(ELPP_THREAD_SAFE)
@@ -2598,7 +2604,7 @@ namespace el
       m_data = data;
       dispatch( m_data->logMessage( )->logger( )->logBuilder( )->build( m_data->logMessage( ),
                 m_data->dispatchAction( ) == base::DispatchAction::NormalLog ) );
-    }
+  }
 
     void DefaultLogDispatchCallback::dispatch( base::type::string_t&& logLine )
     {
@@ -2665,7 +2671,7 @@ namespace el
 #  else
         syslog( sysLogPriority, "%s", logLine.c_str( ) );
 #  endif
-      }
+        }
 #endif  // defined(ELPP_SYSLOG)
     }
 
@@ -2705,7 +2711,7 @@ namespace el
       ELPP_INTERNAL_INFO( 6, "Log queue cleaned" );
     }
 
-    bool AsyncDispatchWorker::clean( void )
+    bool AsyncDispatchWorker::clean( )
     {
       std::mutex m;
       std::unique_lock<std::mutex> lk( m );
@@ -2719,7 +2725,7 @@ namespace el
       return ELPP->asyncLogQueue( )->empty( );
     }
 
-    void AsyncDispatchWorker::emptyQueue( void )
+    void AsyncDispatchWorker::emptyQueue( )
     {
       while( !ELPP->asyncLogQueue( )->empty( ) )
       {
@@ -2729,7 +2735,7 @@ namespace el
       }
     }
 
-    void AsyncDispatchWorker::start( void )
+    void AsyncDispatchWorker::start( )
     {
       base::threading::msleep( 5000 ); // 5s (why?)
       setContinueRunning( true );
@@ -2802,7 +2808,7 @@ namespace el
 #  endif  // defined(ELPP_SYSLOG)
     }
 
-    void AsyncDispatchWorker::run( void )
+    void AsyncDispatchWorker::run( )
     {
       while( continueRunning( ) )
       {
@@ -2893,7 +2899,7 @@ namespace el
 #if !defined(ELPP_DISABLE_CUSTOM_FORMAT_SPECIFIERS)
       el::base::threading::ScopedLock lock_( ELPP->customFormatSpecifiersLock( ) );
       ELPP_UNUSED( lock_ );
-      for( std::vector<CustomFormatSpecifier>::const_iterator it = ELPP->customFormatSpecifiers( )->begin( );
+      for( auto it = ELPP->customFormatSpecifiers( )->begin( );
            it != ELPP->customFormatSpecifiers( )->end( ); ++it )
       {
         std::string fs( it->formatSpecifier( ) );
@@ -2907,7 +2913,7 @@ namespace el
 
     // LogDispatcher
 
-    void LogDispatcher::dispatch( void )
+    void LogDispatcher::dispatch( )
     {
       if( m_proceed && m_dispatchAction == base::DispatchAction::None )
       {
@@ -2971,7 +2977,7 @@ namespace el
         m_logger->stream( ) << " ";
       }
       return *this;
-    }
+      }
 
     // Writer
 
@@ -2993,7 +2999,7 @@ namespace el
         m_loggerIds.reserve( count );
         for( int i = 0; i < count; ++i )
         {
-          m_loggerIds.push_back( std::string( id ) );
+          m_loggerIds.emplace_back( id );
           id = va_arg( loggersList, const char* );
         }
         va_end( loggersList );
@@ -3100,11 +3106,11 @@ namespace el
       {
         m_logger->stream( ).str( ELPP_LITERAL( "" ) );
         m_logger->releaseLock( );
-      }
+        }
 #endif // ELPP_LOGGING_ENABLED
-    }
+      }
 
-    void Writer::triggerDispatch( void )
+    void Writer::triggerDispatch( )
     {
       if( m_proceed )
       {
@@ -3140,7 +3146,7 @@ namespace el
 
     // PErrorWriter
 
-    PErrorWriter::~PErrorWriter( void )
+    PErrorWriter::~PErrorWriter( )
     {
       if( m_proceed )
       {
@@ -3177,7 +3183,7 @@ namespace el
 #endif  // !defined(ELPP_DISABLE_PERFORMANCE_TRACKING) && ELPP_LOGGING_ENABLED
     }
 
-    PerformanceTracker::~PerformanceTracker( void )
+    PerformanceTracker::~PerformanceTracker( )
     {
 #if !defined(ELPP_DISABLE_PERFORMANCE_TRACKING) && ELPP_LOGGING_ENABLED
       if( m_enabled )
@@ -3292,7 +3298,7 @@ namespace el
         return os;
       }
 
-      void StackTrace::generateNew( void )
+      void StackTrace::generateNew( )
       {
 #if ELPP_STACKTRACE
         m_stack.clear( );
@@ -3438,10 +3444,10 @@ namespace el
         {
           m_handler = signal( base::consts::kCrashSignals[ i ].numb, cHandler );
         }
-      }
+    }
 
 #endif // defined(ELPP_FEATURE_ALL) || defined(ELPP_FEATURE_CRASH_LOG)
-    }  // namespace debug
+  }  // namespace debug
   } // namespace base
 
   // el
@@ -3522,7 +3528,7 @@ namespace el
 
   void Loggers::reconfigureAllLoggers( const Configurations& configurations )
   {
-    for( base::RegisteredLoggers::iterator it = ELPP->registeredLoggers( )->begin( );
+    for( auto it = ELPP->registeredLoggers( )->begin( );
          it != ELPP->registeredLoggers( )->end( ); ++it )
     {
       Loggers::reconfigureLogger( it->second, configurations );
@@ -3532,7 +3538,7 @@ namespace el
   void Loggers::reconfigureAllLoggers( Level level, ConfigurationType configurationType,
                                        const std::string& value )
   {
-    for( base::RegisteredLoggers::iterator it = ELPP->registeredLoggers( )->begin( );
+    for( auto it = ELPP->registeredLoggers( )->begin( );
          it != ELPP->registeredLoggers( )->end( ); ++it )
     {
       Logger* logger = it->second;
@@ -3550,17 +3556,17 @@ namespace el
     }
   }
 
-  const Configurations* Loggers::defaultConfigurations( void )
+  const Configurations* Loggers::defaultConfigurations( )
   {
     return ELPP->registeredLoggers( )->defaultConfigurations( );
   }
 
-  const base::LogStreamsReferenceMap* Loggers::logStreamsReference( void )
+  const base::LogStreamsReferenceMap* Loggers::logStreamsReference( )
   {
     return ELPP->registeredLoggers( )->logStreamsReference( );
   }
 
-  base::TypedConfigurations Loggers::defaultTypedConfigurations( void )
+  base::TypedConfigurations Loggers::defaultTypedConfigurations( )
   {
     return base::TypedConfigurations(
       ELPP->registeredLoggers( )->defaultConfigurations( ),
@@ -3570,7 +3576,7 @@ namespace el
   std::vector<std::string>* Loggers::populateAllLoggerIds( std::vector<std::string>* targetList )
   {
     targetList->clear( );
-    for( base::RegisteredLoggers::iterator it = ELPP->registeredLoggers( )->list( ).begin( );
+    for( auto it = ELPP->registeredLoggers( )->list( ).begin( );
          it != ELPP->registeredLoggers( )->list( ).end( ); ++it )
     {
       targetList->push_back( it->first );
@@ -3586,7 +3592,7 @@ namespace el
     std::string line = std::string( );
     std::stringstream ss;
     Logger* logger = nullptr;
-    auto configure = [ & ]( void )
+    auto configure = [ & ]( )
     {
       ELPP_INTERNAL_INFO( 8, "Configuring logger: '" << logger->id( ) << "' with configurations \n" << ss.str( )
                           << "\n--------------" );
@@ -3642,7 +3648,7 @@ namespace el
     return true;
   }
 
-  void Loggers::flushAll( void )
+  void Loggers::flushAll( )
   {
     ELPP->registeredLoggers( )->flushAll( );
   }
@@ -3652,7 +3658,7 @@ namespace el
     ELPP->vRegistry( )->setLevel( level );
   }
 
-  base::type::VerboseLevel Loggers::verboseLevel( void )
+  base::type::VerboseLevel Loggers::verboseLevel( )
   {
     return ELPP->vRegistry( )->level( );
   }
@@ -3665,20 +3671,20 @@ namespace el
     }
   }
 
-  void Loggers::clearVModules( void )
+  void Loggers::clearVModules( )
   {
     ELPP->vRegistry( )->clearModules( );
   }
 
   // VersionInfo
 
-  const std::string VersionInfo::version( void )
+  const std::string VersionInfo::version( )
   {
     return std::string( "9.96.7" );
   }
   /// @brief Release date of current version
-  const std::string VersionInfo::releaseDate( void )
+  const std::string VersionInfo::releaseDate( )
   {
     return std::string( "24-11-2018 0728hrs" );
   }
-} // namespace el
+  } // namespace el
