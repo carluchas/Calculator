@@ -41,11 +41,11 @@ void EfficientPrimeNumberOperation::AddNextSeriesNumberSpecific(
   {
     to_add += 2;
 
-    auto root = sqrtl( long double( to_add ) );
+    auto root = floor( sqrtl( long double( to_add ) ) );
 
-    prime = ( floor( root ) > 0 );
+    prime = ( root > 0 );
 
-    for( unsigned int i = 0; ar_series[ i ] < root && prime; i++ )
+    for( unsigned int i = 0; ar_series[ i ] <= root && prime; i++ )
     {
       if( to_add % ar_series[ i ] == 0 )
       {
