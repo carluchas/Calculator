@@ -1,14 +1,14 @@
 #include "Basic/Headers/easylogging++.h"
 #include "Data/Headers/IntervalData.h"
 #include "gtest/gtest.h"
-#include "Operations/Headers/PrimeNumberOperation.h"
+#include "Operations/Headers/EfficientPrimeNumberOperation.h"
 #include "Operations/Interfaces/IOperation.h"
 #include <list>
 #include <string>
 
-TEST( PrimeNumberOperationTestCase, PrimeNumberOperationTest )
+TEST( EfficientPrimeNumberOperationTestCase, EfficientPrimeNumberOperationTest )
 {
-  auto sp_operation = PrimeNumberOperation::NewSptr( );
+  auto sp_operation = EfficientPrimeNumberOperation::NewSptr( );
 
   ASSERT_TRUE( sp_operation );
 

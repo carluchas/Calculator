@@ -17,8 +17,12 @@ TEST( IntervalDataTestCase, IntervalDataTest )
 
   ASSERT_TRUE( sp_interval );
 
+  EXPECT_TRUE( sp_interval->IsValid( ) );
+
   EXPECT_EQ( first, sp_interval->FirstValue( ) );
   EXPECT_EQ( num, sp_interval->NumberOfValues( ) );
+
+  EXPECT_EQ( first + num - 1, sp_interval->LastValue( ) );
 
   std::string to_compare( "From the " );
 
@@ -29,4 +33,20 @@ TEST( IntervalDataTestCase, IntervalDataTest )
   to_compare += presenter.ToOrdinal( first - 1 + num );
 
   EXPECT_EQ( to_compare, sp_interval->Present( ) );
+
+  sp_data = IntervalData::NewSptr( 0, 35 );
+
+  sp_interval = std::dynamic_pointer_cast<IntervalData>( sp_data );
+
+  ASSERT_TRUE( sp_interval );
+
+  EXPECT_FALSE( sp_interval->IsValid( ) );
+
+  sp_data = IntervalData::NewSptr( 5, 0 );
+
+  sp_interval = std::dynamic_pointer_cast<IntervalData>( sp_data );
+
+  ASSERT_TRUE( sp_interval );
+
+  EXPECT_FALSE( sp_interval->IsValid( ) );
 }

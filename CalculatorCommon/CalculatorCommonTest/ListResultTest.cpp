@@ -25,7 +25,11 @@ TEST( ListResultTestCase, ListResultTest )
 
   ASSERT_TRUE( sp_list );
 
+  EXPECT_FALSE( sp_list->IsValid( ) );
+
   sp_list->SetList( int_list );
+
+  EXPECT_TRUE( sp_list->IsValid( ) );
 
   EXPECT_EQ( sp_list->Present( ), str_list );
 
