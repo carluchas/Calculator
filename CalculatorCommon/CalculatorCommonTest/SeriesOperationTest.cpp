@@ -46,7 +46,7 @@ public:
     }
     else if( _mode == NoElementAdded )
     {
-      ar_series = ar_series;
+      return;
     }
   }
 
