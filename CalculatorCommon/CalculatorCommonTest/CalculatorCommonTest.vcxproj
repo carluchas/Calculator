@@ -41,6 +41,7 @@
     <ClCompile Include="ListResultTest.cpp" />
     <ClCompile Include="OrdinalPresenterTest.cpp" />
     <ClCompile Include="PrimeNumberOperationTest.cpp" />
+    <ClCompile Include="SeriesOperationTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

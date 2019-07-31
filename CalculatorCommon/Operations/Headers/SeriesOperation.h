@@ -11,8 +11,6 @@ public:
 
   virtual ~SeriesOperation( ) noexcept = default;
 
-  virtual std::string Present( ) const noexcept override;
-
   virtual IResultSptr Execute( IDataSptr asp_data ) const noexcept( false )
     override final;
 

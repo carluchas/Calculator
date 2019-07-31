@@ -16,12 +16,6 @@ TEST( FibonacciNumberOperationTestCase, FibonacciNumberOperationTest )
   unsigned int first = 2;
   unsigned long size = 5;
 
-  LOG( INFO ) << "First prime number to show: ";
-  scanf_s( "%d", &first );
-
-  LOG( INFO ) << "Number of prime numbers to show: ";
-  scanf_s( "%d", &size );
-
   auto sp_data = IDataSptr( IntervalData::NewSptr( first, size ) );
 
   auto sp_result = sp_operation->Execute( sp_data );

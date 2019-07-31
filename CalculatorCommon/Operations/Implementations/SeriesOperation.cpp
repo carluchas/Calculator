@@ -3,16 +3,12 @@
 #include "Operations/Headers/SeriesOperation.h"
 #include "Results/Headers/ListResult.h"
 #include "Results/Implementations/ListResult.cpp"
-#include <limits>
+#include <stdexcept>
+#include <vector>
 
 SeriesOperation::SeriesOperation( ) noexcept :
   ISeriesOperation( )
 {
-}
-
-std::string SeriesOperation::Present( ) const noexcept
-{
-  return std::string( "Prime Numbers" );
 }
 
 IResultSptr SeriesOperation::Execute( IDataSptr asp_data )
@@ -66,14 +62,26 @@ void SeriesOperation::AddNextSeriesNumber(
 {
   auto old_size = ar_series.size( );
 
-  if( old_size > std::numeric_limits< size_t >::max( ) - 1 )
+  try
   {
-    throw OperationException( "Next series number cannot be contained in "
-                              "the result output in this platform using "
-                              "the stl basic vector", __func__ );
+    AddNextSeriesNumberSpecific( ar_series );
   }
+  catch( const std::bad_array_new_length& ar_error )
+  {
+    std::string msg( "Next series number cannot be contained in the result "
+                     "output in this platform using the stl basic vector: " );
+    msg += ar_error.what( );
 
-  AddNextSeriesNumberSpecific( ar_series );
+    throw OperationException( msg.data( ), __func__ );
+  }
+  catch( const std::length_error& ar_error )
+  {
+    std::string msg( "Next series number cannot be contained in the result "
+                     "output in this platform using the stl basic vector: " );
+    msg += ar_error.what( );
+
+    throw OperationException( msg.data( ), __func__ );
+  }
 
   if( old_size >= ar_series.size( ) )
   {
