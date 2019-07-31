@@ -74,6 +74,10 @@ TEST( SeriesOperationTestCase, SeriesOperationTest )
 
   ASSERT_TRUE( sp_operation );
 
+  auto text = sp_operation->Present( );
+
+  EXPECT_FALSE( text.empty( ) );
+
   EXPECT_THROW( auto sp_result = sp_operation->Execute( IDataSptr( ) ),
                 OperationException );
 

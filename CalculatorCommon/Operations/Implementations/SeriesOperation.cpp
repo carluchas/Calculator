@@ -74,14 +74,6 @@ void SeriesOperation::AddNextSeriesNumber(
 
     throw OperationException( msg.data( ), __func__ );
   }
-  catch( const std::length_error& ar_error )
-  {
-    std::string msg( "Next series number cannot be contained in the result "
-                     "output in this platform using the stl basic vector: " );
-    msg += ar_error.what( );
-
-    throw OperationException( msg.data( ), __func__ );
-  }
 
   if( old_size >= ar_series.size( ) )
   {
