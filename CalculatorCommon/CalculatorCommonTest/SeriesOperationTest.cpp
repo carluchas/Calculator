@@ -3,12 +3,14 @@
 #include "Operations/Headers/OperationException.h"
 #include "Operations/Headers/SeriesOperation.h"
 #include "Operations/Interfaces/IOperation.h"
+#include "Results/Headers/ListResult.h"
+#include "Results/Interfaces/IResultSptr.h"
 #include "gtest/gtest.h"
 #include <limits>
 #include <list>
 #include <string>
 
-class TestSeriesoperation : public SeriesOperation
+class TestSeriesOperation : public SeriesOperation
 {
 public:
 
@@ -20,17 +22,17 @@ public:
 
   static IOperationSptr NewSptr( Mode a_test_mode ) noexcept
   {
-    return IOperationSptr( new TestSeriesoperation( a_test_mode ) );
+    return IOperationSptr( new TestSeriesOperation( a_test_mode ) );
   };
 
-  TestSeriesoperation( ) noexcept = default;
+  TestSeriesOperation( ) noexcept = default;
 
-  explicit TestSeriesoperation( Mode a_test_mode ) noexcept :
+  explicit TestSeriesOperation( Mode a_test_mode ) noexcept :
     _mode( a_test_mode )
   {
   }
 
-  virtual ~TestSeriesoperation( ) noexcept = default;
+  virtual ~TestSeriesOperation( ) noexcept = default;
 
   virtual void AddNextSeriesNumberSpecific(
     std::vector<unsigned long long>& ar_series )
@@ -40,9 +42,7 @@ public:
     {
       auto v_size = ar_series.max_size( ) - 1;
 
-      std::vector<unsigned long long> v( v_size );
-
-      ar_series = v;
+      ar_series = std::vector<unsigned long long>( v_size );
     }
     else if( _mode == NoElementAdded )
     {
@@ -69,8 +69,8 @@ private:
 
 TEST( SeriesOperationTestCase, SeriesOperationTest )
 {
-  auto sp_operation = TestSeriesoperation::NewSptr(
-    TestSeriesoperation::StlLimitTest );
+  auto sp_operation = TestSeriesOperation::NewSptr(
+    TestSeriesOperation::StlLimitTest );
 
   ASSERT_TRUE( sp_operation );
 
@@ -93,8 +93,8 @@ TEST( SeriesOperationTestCase, SeriesOperationTest )
 
   EXPECT_THROW( auto sp_result = sp_operation->Execute( sp_data ), OperationException );
 
-  sp_operation = TestSeriesoperation::NewSptr(
-    TestSeriesoperation::NoElementAdded );
+  sp_operation = TestSeriesOperation::NewSptr(
+    TestSeriesOperation::NoElementAdded );
 
   sp_data = IDataSptr( IntervalData::NewSptr( 2, size ) );
 
