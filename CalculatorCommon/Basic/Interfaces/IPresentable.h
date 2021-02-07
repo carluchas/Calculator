@@ -6,13 +6,11 @@ class IPresentable
 {
 public:
 
-  virtual ~IPresentable( ) noexcept = default;
+  virtual ~IPresentable() noexcept = default;
 
-  virtual std::string Present( ) const noexcept = 0;
+  virtual std::string Present() const noexcept = 0;
 
 protected:
 
-  IPresentable( ) noexcept = default;
-
-private:
+  IPresentable() noexcept = default;
 };

@@ -5,31 +5,31 @@
 #include "Operations/Interfaces/ISeriesOperation.h"
 #include "Results/Interfaces/IResultSptr.h"
 
-class SeriesOperation : public virtual ISeriesOperation
+class SeriesOperation : public ISeriesOperation
 {
 public:
 
-  virtual ~SeriesOperation( ) noexcept = default;
+  ~SeriesOperation() noexcept override = default;
 
-  virtual IResultSptr Execute( IDataSptr asp_data ) const noexcept( false )
-    override final;
+  IResultSptr Execute(IDataSptr asp_data) const noexcept(false)
+    final;
 
   virtual void AddNextSeriesNumberSpecific(
-    std::vector< unsigned long long >& ar_series ) const noexcept( false ) = 0;
+    std::vector< unsigned long long >& ar_series) const noexcept(false) = 0;
 
   void AddNextSeriesNumber(
-    std::vector< unsigned long long >& ar_series ) const
-    noexcept( false ) override final;
+    std::vector< unsigned long long >& ar_series) const
+    noexcept(false) override;
 
 protected:
 
-  SeriesOperation( ) noexcept;
+  SeriesOperation() noexcept;
 
 private:
 
-  explicit SeriesOperation( const SeriesOperation& ar_operation )
+  explicit SeriesOperation(const SeriesOperation& ar_operation)
     noexcept = default;
 
-  SeriesOperation& operator = ( const SeriesOperation& ar_operation )
+  SeriesOperation& operator = (const SeriesOperation& ar_operation)
     noexcept = default;
 };

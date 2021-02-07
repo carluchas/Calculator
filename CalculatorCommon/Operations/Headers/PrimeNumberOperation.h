@@ -5,32 +5,36 @@
 #include "Operations/Interfaces/IOperationSptr.h"
 #include <memory>
 
-class PrimeNumberOperation : public virtual SeriesOperation
+class PrimeNumberOperation : public SeriesOperation
 {
+  class ConstructionKey {};
+
 public:
 
-  static IOperationSptr NewSptr( ) noexcept;
+  static IOperationSptr NewSptr() noexcept;
 
-  virtual ~PrimeNumberOperation( ) noexcept = default;
+  explicit PrimeNumberOperation(const ConstructionKey&) noexcept;
 
-  virtual std::string Present( ) const noexcept override;
+  ~PrimeNumberOperation() noexcept override = default;
+
+  std::string Present() const noexcept override;
 
 protected:
 
-  PrimeNumberOperation( ) noexcept;
+  PrimeNumberOperation() noexcept = default;
 
-  virtual std::vector< unsigned long long >
-    SeriesOrigin( ) const noexcept override;
+  std::vector< unsigned long long >
+    SeriesOrigin() const noexcept override;
 
-  virtual void AddNextSeriesNumberSpecific(
-    std::vector< unsigned long long >& ar_serie )
-    const noexcept( false ) override;
+  void AddNextSeriesNumberSpecific(
+    std::vector< unsigned long long >& ar_serie)
+    const noexcept(false) override;
 
 private:
 
-  explicit PrimeNumberOperation( const PrimeNumberOperation& ar_operation )
+  explicit PrimeNumberOperation(const PrimeNumberOperation& ar_operation)
     noexcept = default;
 
-  PrimeNumberOperation& operator = ( const PrimeNumberOperation& ar_operation )
+  PrimeNumberOperation& operator = (const PrimeNumberOperation& ar_operation)
     noexcept = default;
 };

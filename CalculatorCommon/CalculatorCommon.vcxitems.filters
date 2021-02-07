@@ -105,6 +105,39 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\EfficientPrimeNumberOperation.h">
       <Filter>Operations\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResultsExplorer.h">
+      <Filter>Results\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResultsExplorerSptr.h">
+      <Filter>Results\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Headers\ResultsExplorer.h">
+      <Filter>Results\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\OperationsTracker.h">
+      <Filter>Operations\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperationsTracker.h">
+      <Filter>Operations\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperationsTrackerSptr.h">
+      <Filter>Operations\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\Calculation.h">
+      <Filter>Basic\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\ICalculation.h">
+      <Filter>Basic\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\ICalculationSptr.h">
+      <Filter>Basic\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IPresentableOperation.h">
+      <Filter>Operations\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IPresentableOperationSptr.h">
+      <Filter>Operations\Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Data\Implementations\IntervalData.cpp">
@@ -133,6 +166,15 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\EfficientPrimeNumberOperation.cpp">
       <Filter>Operations\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Results\Implementations\ResultsExplorer.cpp">
+      <Filter>Results\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\OperationsTracker.cpp">
+      <Filter>Operations\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\Calculation.cpp">
+      <Filter>Basic\Implementations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

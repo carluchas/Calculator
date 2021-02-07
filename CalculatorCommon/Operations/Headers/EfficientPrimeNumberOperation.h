@@ -5,26 +5,32 @@
 #include "Operations/Interfaces/IOperationSptr.h"
 #include <memory>
 
-class EfficientPrimeNumberOperation : public virtual PrimeNumberOperation
+class EfficientPrimeNumberOperation : public PrimeNumberOperation
 {
+  class ConstructionKey {};
+
 public:
 
-  static IOperationSptr NewSptr( ) noexcept;
+  static IOperationSptr NewSptr() noexcept;
 
-  virtual ~EfficientPrimeNumberOperation( ) noexcept = default;
+  explicit EfficientPrimeNumberOperation(const ConstructionKey&) noexcept;
 
-  virtual std::string Present( ) const noexcept override;
+  ~EfficientPrimeNumberOperation() noexcept override = default;
+
+  std::string Present() const noexcept override;
 
 protected:
 
-  EfficientPrimeNumberOperation( ) noexcept;
+  EfficientPrimeNumberOperation() noexcept = default;
 
-  virtual void AddNextSeriesNumberSpecific(
-    std::vector< unsigned long long >& ar_serie ) const noexcept( false ) override;
+  void AddNextSeriesNumberSpecific(
+    std::vector< unsigned long long >& ar_serie) const noexcept(false) override;
 
 private:
 
-  explicit EfficientPrimeNumberOperation( const EfficientPrimeNumberOperation& ar_operation ) noexcept = default;
+  explicit EfficientPrimeNumberOperation(
+    const EfficientPrimeNumberOperation& ar_operation) noexcept = default;
 
-  EfficientPrimeNumberOperation& operator = ( const EfficientPrimeNumberOperation& ar_operation ) noexcept = default;
+  EfficientPrimeNumberOperation& operator = (
+    const EfficientPrimeNumberOperation& ar_operation) noexcept = default;
 };

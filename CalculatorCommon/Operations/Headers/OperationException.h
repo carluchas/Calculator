@@ -6,21 +6,19 @@ class OperationException : public std::exception
 {
 public:
 
-  explicit OperationException( char const* const a_message,
-                               char const* const a_function ) noexcept;
+  explicit OperationException(char const* const a_message,
+    char const* const a_function) noexcept;
 
-  OperationException( const OperationException& ar_exception ) noexcept = default;
+  OperationException(const OperationException& ar_exception) noexcept = default;
 
-  OperationException& operator = ( const OperationException& ar_exception ) noexcept =
+  OperationException& operator = (const OperationException& ar_exception) noexcept =
     default;
 
-  virtual char const* where( ) const noexcept;
-
-protected:
+  virtual char const* where() const noexcept;
 
 private:
 
   char const* _p_function;
 
-  OperationException( );
+  OperationException();
 };

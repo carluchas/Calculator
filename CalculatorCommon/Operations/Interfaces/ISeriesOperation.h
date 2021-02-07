@@ -3,22 +3,20 @@
 #include "Operations/Interfaces/IOperation.h"
 #include <vector>
 
-class ISeriesOperation : public virtual IOperation
+class ISeriesOperation : public IOperation
 {
 public:
 
-  virtual ~ISeriesOperation( ) noexcept = default;
+  ~ISeriesOperation() noexcept override = default;
 
 protected:
 
-  ISeriesOperation( ) noexcept = default;
+  ISeriesOperation() noexcept = default;
 
-  virtual std::vector< unsigned long long > SeriesOrigin( ) const
+  virtual std::vector< unsigned long long > SeriesOrigin() const
     noexcept = 0;
 
   virtual void AddNextSeriesNumber(
-    std::vector< unsigned long long >& ar_series ) const
-    noexcept( false ) = 0;
-
-private:
+    std::vector< unsigned long long >& ar_series) const
+    noexcept(false) = 0;
 };

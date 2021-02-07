@@ -14,8 +14,11 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\Calculation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\easylogging++.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Headers\OrdinalPresenter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\ICalculation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\ICalculationSptr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\IPresentable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Basic\Interfaces\IValidable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Data\Headers\IntervalData.h" />
@@ -24,24 +27,35 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\EfficientPrimeNumberOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\FibonacciNumberOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\OperationException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\OperationsTracker.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\PrimeNumberOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Headers\SeriesOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperationSptr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperationsTracker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IOperationsTrackerSptr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IPresentableOperation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\IPresentableOperationSptr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Operations\Interfaces\ISeriesOperation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Results\Headers\ListResult.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Headers\ResultsExplorer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResult.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResultsExplorer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResultsExplorerSptr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Results\Interfaces\IResultSptr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\Calculation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\easylogging++.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Basic\Implementations\OrdinalPresenter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Data\Implementations\IntervalData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\EfficientPrimeNumberOperation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\FibonacciNumberOperation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\OperationException.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\OperationsTracker.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\PrimeNumberOperation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Operations\Implementations\SeriesOperation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Results\Implementations\ListResult.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Results\Implementations\ResultsExplorer.cpp" />
   </ItemGroup>
 </Project>

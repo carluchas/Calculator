@@ -11,57 +11,57 @@ class TestPrimeNumberOperation : public PrimeNumberOperation
 {
 public:
 
-  static IOperationSptr NewSptr( ) noexcept
+  static IOperationSptr NewSptr() noexcept
   {
-    return IOperationSptr( new TestPrimeNumberOperation( ) );
+    return std::make_shared < TestPrimeNumberOperation>();
   };
 
-  TestPrimeNumberOperation( ) noexcept = default;
+  TestPrimeNumberOperation() noexcept = default;
 
-  virtual ~TestPrimeNumberOperation( ) noexcept = default;
+  ~TestPrimeNumberOperation() noexcept override = default;
 
-  virtual void AddNextSeriesNumberSpecific(
-    std::vector<unsigned long long>& ar_series )
-    const noexcept( false ) override
+  void AddNextSeriesNumberSpecific(
+    std::vector<unsigned long long>& ar_series)
+    const noexcept(false) override
   {
-    PrimeNumberOperation::AddNextSeriesNumberSpecific( ar_series );
+    PrimeNumberOperation::AddNextSeriesNumberSpecific(ar_series);
   }
 };
 
-TEST( PrimeNumberOperationTestCase, PrimeNumberOperationTest )
+TEST(PrimeNumberOperationTestCase, PrimeNumberOperationTest)
 {
-  auto sp_operation = PrimeNumberOperation::NewSptr( );
+  auto sp_operation = PrimeNumberOperation::NewSptr();
 
-  ASSERT_TRUE( sp_operation );
+  ASSERT_TRUE(sp_operation);
 
   unsigned int first = 2;
   unsigned long size = 5;
 
-  auto sp_data = IDataSptr( IntervalData::NewSptr( first, size ) );
+  auto sp_data = IDataSptr(IntervalData::NewSptr(first, size));
 
-  auto sp_result = sp_operation->Execute( sp_data );
+  auto sp_result = sp_operation->Execute(sp_data);
 
-  ASSERT_TRUE( sp_result );
+  ASSERT_TRUE(sp_result);
 
-  EXPECT_EQ( sp_operation->Present( ), std::string( "Prime Numbers" ) );
+  EXPECT_EQ(sp_operation->Present(), std::string("Prime Numbers"));
 
-  EXPECT_EQ( sp_result->Present( ), std::string( "3, 5, 7, 11, 13" ) );
+  EXPECT_EQ(sp_result->Present(), std::string("3, 5, 7, 11, 13"));
 
-  sp_operation = TestPrimeNumberOperation::NewSptr( );
+  sp_operation = TestPrimeNumberOperation::NewSptr();
 
-  ASSERT_TRUE( sp_operation );
+  ASSERT_TRUE(sp_operation);
 
   auto sp_specific_operation =
-    std::dynamic_pointer_cast<TestPrimeNumberOperation>( sp_operation );
+    std::dynamic_pointer_cast<TestPrimeNumberOperation>(sp_operation);
 
-  ASSERT_TRUE( sp_specific_operation );
+  ASSERT_TRUE(sp_specific_operation);
 
-  EXPECT_THROW( sp_specific_operation->AddNextSeriesNumberSpecific(
-    std::vector<unsigned long long>( ) ), OperationException );
+  EXPECT_THROW(sp_specific_operation->AddNextSeriesNumberSpecific(
+    std::vector<unsigned long long>()), OperationException);
 
   std::vector<unsigned long long> series(
-    { ( ( std::numeric_limits< unsigned long long >::max )( ) - 1 ) } );
+    { ((std::numeric_limits< unsigned long long >::max)() - 1) });
 
-  EXPECT_THROW( sp_specific_operation->AddNextSeriesNumberSpecific( series ),
-                OperationException );
+  EXPECT_THROW(sp_specific_operation->AddNextSeriesNumberSpecific(series),
+    OperationException);
 }

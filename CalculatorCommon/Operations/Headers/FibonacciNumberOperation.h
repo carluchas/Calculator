@@ -5,29 +5,35 @@
 #include "Operations/Interfaces/IOperationSptr.h"
 #include <memory>
 
-class FibonacciNumberOperation : public virtual SeriesOperation
+class FibonacciNumberOperation : public SeriesOperation
 {
+  class ConstructionKey {};
+
 public:
 
-  static IOperationSptr NewSptr( ) noexcept;
+  static IOperationSptr NewSptr() noexcept;
 
-  virtual ~FibonacciNumberOperation( ) noexcept = default;
+  explicit FibonacciNumberOperation(const ConstructionKey&) noexcept;
 
-  virtual std::string Present( ) const noexcept override;
+  ~FibonacciNumberOperation() noexcept override = default;
+
+  std::string Present() const noexcept override;
 
 protected:
 
-  FibonacciNumberOperation( ) noexcept;
+  FibonacciNumberOperation() noexcept = default;
 
-  virtual std::vector< unsigned long long >
-    SeriesOrigin( ) const noexcept override;
+  std::vector< unsigned long long >
+    SeriesOrigin() const noexcept override;
 
-  virtual void AddNextSeriesNumberSpecific(
-    std::vector< unsigned long long >& ar_series ) const noexcept( false ) override;
+  void AddNextSeriesNumberSpecific(
+    std::vector< unsigned long long >& ar_series) const noexcept(false) override;
 
 private:
 
-  explicit FibonacciNumberOperation( const FibonacciNumberOperation& ar_operation ) noexcept = default;
+  explicit FibonacciNumberOperation(
+    const FibonacciNumberOperation& ar_operation) noexcept = default;
 
-  FibonacciNumberOperation& operator = ( const FibonacciNumberOperation& ar_operation ) noexcept = default;
+  FibonacciNumberOperation& operator = (
+    const FibonacciNumberOperation& ar_operation) noexcept = default;
 };
